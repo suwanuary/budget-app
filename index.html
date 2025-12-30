@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>우리 집 한달 가계부</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,11 +33,19 @@
             --sidebar-width: 260px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html {
+            -webkit-tap-highlight-color: transparent; /* iOS 탭 하이라이트 제거 */
+        }
         body {
             font-family: 'Noto Sans KR', -apple-system, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            -webkit-text-size-adjust: 100%; /* iOS 텍스트 크기 조정 방지 */
+        }
+        /* 모든 클릭/터치 가능한 요소에 터치 개선 */
+        button, input, select, textarea, a, .nav-item, .calendar-day {
+            touch-action: manipulation;
         }
         .menu-overlay {
             display: none;
@@ -218,6 +226,8 @@
             cursor: pointer;
             transition: all 0.15s;
             border: none;
+            touch-action: manipulation; /* 더블탭 줌 방지 */
+            -webkit-tap-highlight-color: transparent; /* iOS 탭 하이라이트 제거 */
         }
         .btn-primary { background: var(--accent-blue); color: white; }
         .btn-primary:hover { background: #4A6FEE; }
@@ -457,9 +467,12 @@
             padding: 12px 14px;
             border: 1px solid var(--border-light);
             border-radius: var(--radius-sm);
-            font-size: 14px;
+            font-size: 16px; /* 모바일에서 자동 줌 방지 */
             font-family: inherit;
             background: var(--bg-secondary);
+            -webkit-appearance: none; /* iOS 스타일 제거 */
+            appearance: none;
+            touch-action: manipulation; /* 더블탭 줌 방지 */
         }
         .form-input:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px var(--accent-blue-bg); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -779,7 +792,7 @@
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
-            .menu-overlay { display: block; }
+            .menu-overlay.active { display: block; }
             .mobile-header { display: flex; }
             .main-content { margin-left: 0; padding: 80px 16px 100px; }
             .page-title { font-size: 22px; }
