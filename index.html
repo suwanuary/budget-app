@@ -154,6 +154,10 @@
             font-size: 12px;
             cursor: pointer;
             color: var(--text-secondary);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 51;
         }
         .mobile-admin-btn.admin-mode {
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
@@ -552,6 +556,8 @@
             font-size: 12px;
             font-weight: 500;
             transition: all 0.15s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
         .admin-bar .btn-login {
             background: white;
@@ -701,12 +707,11 @@
             .admin-bar {
                 left: 0;
                 font-size: 12px;
+                top: 60px;
+                z-index: 49;
             }
             .main-content.with-admin-bar {
                 padding-top: 120px;
-            }
-            .mobile-header + .admin-bar {
-                top: 60px;
             }
         }
         /* Day Detail Panel */
@@ -817,7 +822,7 @@
     <!-- Admin Bar -->
     <div class="admin-bar viewer-mode" id="adminBar">
         <span>🔒 보기 전용 모드</span>
-        <button class="btn-login" onclick="openPasswordModal()">관리자 로그인</button>
+        <button class="btn-login" onclick="openPasswordModal()" ontouchend="openPasswordModal()">관리자 로그인</button>
     </div>
 
     <!-- Password Modal -->
@@ -840,7 +845,7 @@
     <header class="mobile-header">
         <button class="menu-toggle" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
         <div class="mobile-logo"><span>💰</span><span>가계부</span></div>
-        <button class="mobile-admin-btn" id="mobileAdminBtn" onclick="openPasswordModal()">🔒 로그인</button>
+        <button class="mobile-admin-btn" id="mobileAdminBtn" onclick="openPasswordModal()" ontouchend="openPasswordModal()">🔒 로그인</button>
     </header>
     <div class="menu-overlay" onclick="toggleSidebar()"></div>
     <aside class="sidebar" id="sidebar">
@@ -1919,7 +1924,7 @@
             document.getElementById('adminBar').classList.add('viewer-mode');
             document.getElementById('adminBar').innerHTML = `
                 <span>🔒 보기 전용 모드</span>
-                <button class="btn-login" onclick="openPasswordModal()">관리자 로그인</button>
+                <button class="btn-login" onclick="openPasswordModal()" ontouchend="openPasswordModal()">관리자 로그인</button>
             `;
             // 모바일 버튼 업데이트
             const mobileBtn = document.getElementById('mobileAdminBtn');
@@ -1927,6 +1932,7 @@
                 mobileBtn.textContent = '🔒 로그인';
                 mobileBtn.classList.remove('admin-mode');
                 mobileBtn.onclick = openPasswordModal;
+                mobileBtn.ontouchend = openPasswordModal;
             }
             showToast('로그아웃 되었습니다');
         }
